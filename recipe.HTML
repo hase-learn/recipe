@@ -71,25 +71,8 @@
 
     <script>
         window.onload = function() {
-            // Cookieからユーザー名を取得し、"hase"であればデータをロードする
-            var username = getCookie("username");
-            if (username === "hase") {
-                loadSavedData();
-            } else {
-                // ユーザー名が"hase"でない場合の処理（今回は何もしない）
-            }
+            loadSavedData();
         };
-
-        function getCookie(name) {
-            var cookies = document.cookie.split(';');
-            for (var i = 0; i < cookies.length; i++) {
-                var cookie = cookies[i].trim();
-                if (cookie.startsWith(name + '=')) {
-                    return cookie.substring(name.length + 1);
-                }
-            }
-            return "";
-        }
 
         function loadSavedData() {
             loadRecipeList();
