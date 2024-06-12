@@ -95,6 +95,7 @@
 
             // ログイン成功後のページ遷移
             if (username === "hase" && password === "haserecipe") {
+                document.cookie = "username=hase";
                 window.location.href = "recipe.HTML"; // ダッシュボードページのURLに遷移
             } else {
                 alert("ユーザー名またはパスワードが間違っています。");
