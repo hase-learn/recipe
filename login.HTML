@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ログイン</title>
+
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+        }
+        
+        form {
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 5px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            width: 300px; /* フォームの幅を指定 */
+        }
+        
+        h2 {
+            background-color: #333;
+            color: #fff;
+            padding: 20px;
+            text-align: center;
+        }
+        
+        .form-group {
+            margin-bottom: 20px;
+        }
+        
+        .form-group label {
+            display: block;
+            margin-bottom: 5px;
+        }
+        
+        .form-group input {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 3px;
+            box-sizing: border-box;
+        }
+        
+        .form-group button {
+            width: 100%;
+            padding: 10px;
+            background-color: #007bff;
+            color: #fff;
+            border: none;
+            border-radius: 3px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+        
+        .form-group button:hover {
+            background-color: #0056b3;
+        }
+        
+        .error-message {
+            color: #ff0000;
+            margin-top: 5px;
+        }
+        
+    </style>
+</head>
+<body>
+    
+
+    <h2>ログイン</h2>
+    <form id="loginForm">
+        <div>
+            <label for="username">ユーザー名:</label>
+            <input type="text" id="username" name="username" required>
+        </div>
+        <div>
+            <label for="password">パスワード:</label>
+            <input type="password" id="password" name="password" required>
+        </div>
+        <button type="button" onclick="login()">ログイン</button>
+    </form>
+
+    <script>
+        function login() {
+            var username = document.getElementById("username").value;
+            var password = document.getElementById("password").value;
+
+            // ここでログイン処理を行う（例: ユーザー名とパスワードを検証）
+
+            // ログイン成功後のページ遷移
+            if (username === "hase" && password === "haserecipe") {
+                window.location.href = "recipe.HTML"; // ダッシュボードページのURLに遷移
+            } else {
+                alert("ユーザー名またはパスワードが間違っています。");
+            }
+        }
+    </script>
+</body>
+</html>

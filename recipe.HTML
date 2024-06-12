@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ホームページ</title>
+    <style>
+        /* スタイルの例 */
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+        }
+        header {
+            background-color: #333;
+            color: #fff;
+            padding: 20px;
+            text-align: center;
+        }
+        nav {
+            background-color: #555;
+            padding: 10px;
+            text-align: center;
+        }
+        nav a {
+            color: #fff;
+            text-decoration: none;
+            margin: 0 10px;
+            cursor: pointer; /* Add cursor pointer to indicate clickable */
+        }
+        section {
+            padding: 20px;
+        }
+        footer {
+            background-color: #333;
+            color: #fff;
+            text-align: center;
+            padding: 0.1px;
+            position: fixed;
+            bottom: 0;
+            right: 0;
+            width: 50%;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>ポケレシ</h1>
+    </header>
+
+    <nav>
+        <a href="#" onclick="promptForTitle()">新規作成</a>
+        <button onclick="saveAll()">すべて保存</button>
+        <button onclick="promptForDelete()">消去</button>
+    </nav>
+
+    <section id="recipeNames">
+        <h2>お料理名</h2>
+        <ul id="recipeList">
+            <!-- ここに新規作成された料理名がリストアップされます -->
+        </ul>
+    </section>
+
+    <section id="recipeSection">
+        <!-- ここに編集可能な内容を表示します -->
+    </section>
+
+    <footer>
+        <p>あなただけのレシピサイトを</p>
+    </footer>
+
+    <script>
+        window.onload = function() {
+            loadSavedData();
+        };
+
+        function loadSavedData() {
+            loadRecipeList();
+            loadRecipeSections();
+        }
+
+        function loadRecipeList() {
+            var savedRecipeList = localStorage.getItem("recipeList");
+            if (savedRecipeList) {
+                var recipeList = document.getElementById("recipeList");
+                recipeList.innerHTML = savedRecipeList;
+                // リンクがクリックされたときに詳細を表示するリスナーを再設定する必要がある場合はここで実装する
+            }
+        }
+
+        function loadRecipeSections() {
+            var savedRecipeSections = localStorage.getItem("recipeSections");
+            if (savedRecipeSections) {
+                var recipeSection = document.getElementById("recipeSection");
+                recipeSection.innerHTML = savedRecipeSections;
+                // 各セクションの保存ボタンがクリックされたときに処理を実行するリスナーを再設定する必要がある場合はここで実装する
+            }
+        }
+
+        function promptForTitle() {
+            var title = prompt("新しい料理のタイトルを入力してください:");
+            if (title) {
+                addNewRecipeToList(title);
+            }
+        }
+
+        function addNewRecipeToList(title) {
+            var recipeList = document.getElementById("recipeList");
+            var listItem = document.createElement("li");
+            listItem.innerHTML = "<a href='#" + title + "'>" + title + "</a>";
+            listItem.addEventListener("click", function() {
+                showRecipe(title);
+            });
+            recipeList.appendChild(listItem);
+            
+            var section = document.getElementById("recipeSection");
+            var newRecipeSection = document.createElement("section");
+            newRecipeSection.id = title;
+            newRecipeSection.innerHTML = `
+                <h2>${title}</h2>
+                <div class="recipeContent" contenteditable="true">
+                    ■材料<br>
+                    ■調味料<br>
+                    ■手順
+                </div>
+            `;
+            section.appendChild(newRecipeSection);
+        }
+
+        function showRecipe(title) {
+            var section = document.getElementById(title);
+            if (section) {
+                section.style.display = "block";
+            }
+        }
+
+        function saveRecipe(title) {
+            var recipeContent = document.getElementById(title).querySelector(".recipeContent").innerHTML;
+            alert(`${title} の料理の詳細が保存されました:\n${recipeContent}`);
+        }
+
+        function saveAll() {
+            saveRecipeList();
+            saveRecipeSections();
+        }
+
+        function saveRecipeList() {
+            var recipeList = document.getElementById("recipeList").innerHTML;
+            localStorage.setItem("recipeList", recipeList);
+        }
+
+        function saveRecipeSections() {
+            var recipeSection = document.getElementById("recipeSection").innerHTML;
+            localStorage.setItem("recipeSections", recipeSection);
+        }
+
+        function promptForDelete() {
+            var titleToDelete = prompt("消去するお料理の名前を入力してください:");
+            if (titleToDelete) {
+                deleteRecipe(titleToDelete);
+            }
+        }
+
+        function deleteRecipe(title) {
+            var recipeListItems = document.querySelectorAll("#recipeList li");
+            var recipeSections = document.querySelectorAll("#recipeSection section");
+
+            for (var i = 0; i < recipeListItems.length; i++) {
+                var listItem = recipeListItems[i];
+                if (listItem.textContent.trim() === title) {
+                    listItem.remove();
+                }
+            }
+
+            for (var j = 0; j < recipeSections.length; j++) {
+                var section = recipeSections[j];
+                if (section.id === title) {
+                    section.remove();
+                }
+            }
+        }
+    </script>
+</body>
+</html>
